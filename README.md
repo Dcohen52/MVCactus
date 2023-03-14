@@ -15,11 +15,13 @@ Create a new Python file and import the MiniMVC module:
 Inherit from ```MiniMVC``` class, and define routes:
 ```
 class MyApp(MiniMVC):
-    @MiniMVC.route('^/$')
+    @MiniMVC.route('^/$') # Main page.
     def home(self, match):
         context = {'title': 'First thing', 'second': 'Second thing'}
-        self.render_template('home.html', context=context)
+        self.render_template('index.html', context=context)
 ```
+
+Place your HTML files in a folder named ```/templates```.
 
 Run your application:
 ```
@@ -32,11 +34,11 @@ if __name__ == '__main__':
 * Follows the Model-View-Controller pattern for clear and organized code structure.
 * Lightweight and efficient, making it a great fit for small-scale web development projects.
 * Easy to use and easy to learn, with a simple and intuitive API.
-
-Provides built-in support for common web development features such as routing, templates, file upload and request/response handling.
+* Provides built-in support for common web development features such as routing, templates, file upload and request/response handling.
 
 ### Working on
 * Documentation.
+* Easier syntax.
 * More robust error-handling mechanism.
 
 ### Contributing
