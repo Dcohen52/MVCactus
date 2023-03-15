@@ -1,5 +1,9 @@
 # MiniMVC
-MiniMVC is an open-souce lightweight micro web framework that follows the Model-View-Controller pattern, providing developers with a clear structure for building fast and efficient web applications.
+MiniMVC is a lightweight, open-source web framework for building small web applications in Python. It provides a simple and intuitive interface for handling HTTP requests and generating dynamic HTML content.
+
+With MiniMVC, you can define routes for handling different URLs, process GET and POST requests, and serve static files such as images, CSS files, and JavaScript files. MiniMVC also includes a simple file uploader and validator for processing file uploads from HTML forms.
+
+MiniMVC is designed to be easy to use and easy to extend. It is suitable for building small web applications and prototypes, as well as for learning the basics of web development in Python.
 
 ### Getting started
 To get started with MiniMVC, follow these steps:
