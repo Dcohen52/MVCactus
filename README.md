@@ -6,11 +6,11 @@ To get started with MiniMVC, follow these steps:
 
 Install MiniMVC using pip:
 
-```pip install minimvc```
+```pip install MiniMVC```
 
 Create a new Python file and import the MiniMVC module:
 
-```from minimvc import MiniMVC```
+```from MiniMVC.MiniMVC import MiniMVC, MiniMVCRun```
 
 Inherit from ```MiniMVC``` class, and define routes:
 ```
@@ -26,7 +26,7 @@ Place your HTML files in a folder named ```/templates```.
 Run your application:
 ```
 if __name__ == '__main__':
-    app = MiniMVCApp(port=PORT)
+    app = MiniMVCRun(port=PORT)
     app.run(MyApp)
 ```
 
@@ -43,6 +43,9 @@ if __name__ == '__main__':
 
 ### Contributing
 I welcome contributions from the community! If you have ideas for new features or improvements to MiniMVC, please open an issue or submit a pull request on GitHub.
+
+### Website
+https://pypi.org/project/MiniMVC/
 
 ### License
 MiniMVC is licensed under the MIT License. See the LICENSE file for details.
