@@ -1,19 +1,19 @@
-from MiniMVC.MiniMVC import *
+from MVCactus.MVCactus import *
 
 PORT = 8000
 
 
-# Example for file upload using MiniMVC
+# Example for file upload using MVCactus
 
-class App(MiniMVC):
+class App(MVCactus):
     CSS_PATH = 'main.css'
 
-    @MiniMVC.route('^/$')
+    @MVCactus.route('^/$')
     def home(self, match):
         context = {'title': 'First thing', 'second': 'Second thing'}
         self.render_template('index.html', context=context)
 
-    @MiniMVC.post('/upload')
+    @MVCactus.post('/upload')
     def handle_upload(self, body):
         content_type = self.headers['Content-Type']
 
@@ -34,12 +34,12 @@ class App(MiniMVC):
 
         self.send_error(400, 'Invalid request')
 
-    @MiniMVC.route(r'^/files$')
+    @MVCactus.route(r'^/files$')
     def file_list(self, match):
         files = os.listdir('uploads')
         self.render_template('file_list.html', context={'files': files})
 
 
 if __name__ == '__main__':
-    app = MiniMVCRun(port=PORT)
+    app = MVCactusRun(port=PORT)
     app.run(App)
