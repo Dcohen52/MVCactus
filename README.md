@@ -1,25 +1,25 @@
-# MiniMVC
-MiniMVC is a lightweight, open-source web framework for building small web applications in Python. It provides a simple and intuitive interface for handling HTTP requests and generating dynamic HTML content.
+# MVCactus
+MVCactus is a lightweight, open-source web framework for building small web applications in Python. It provides a simple and intuitive interface for handling HTTP requests and generating dynamic HTML content.
 
-With MiniMVC, you can define routes for handling different URLs, process GET and POST requests, and serve static files such as images, CSS files, and JavaScript files. MiniMVC also includes a simple file uploader and validator for processing file uploads from HTML forms.
+With MVCactus, you can define routes for handling different URLs, process GET and POST requests, and serve static files such as images, CSS files, and JavaScript files. MVCactus also includes a simple file uploader and validator for processing file uploads from HTML forms.
 
-MiniMVC is designed to be easy to use and easy to extend. It is suitable for building small web applications and prototypes, as well as for learning the basics of web development in Python.
+MVCactus is designed to be easy to use and easy to extend. It is suitable for building small web applications and prototypes, as well as for learning the basics of web development in Python.
 
 ### Getting started
-To get started with MiniMVC, follow these steps:
+To get started with MVCactus, follow these steps:
 
-Install MiniMVC using pip:
+Install MVCactus using pip:
 
-```pip install MiniMVC```
+```pip install MVCactus```
 
-Create a new Python file and import the MiniMVC module:
+Create a new Python file and import the MVCactus module:
 
-```from MiniMVC.MiniMVC import MiniMVC, MiniMVCRun```
+```from MVCactus.MVCactus import MVCactus, MVCactusRun```
 
-Inherit from ```MiniMVC``` class, and define routes:
+Inherit from ```MVCactus``` class, and define routes:
 ```
-class MyApp(MiniMVC):
-    @MiniMVC.route('^/$') # Main page.
+class MyApp(MVCactus):
+    @MVCactus.route('^/$') # Main page.
     def home(self, match):
         context = {'title': 'First thing', 'second': 'Second thing'}
         self.render_template('index.html', context=context)
@@ -30,7 +30,7 @@ Place your HTML files in a folder named ```/templates```.
 Run your application:
 ```
 if __name__ == '__main__':
-    app = MiniMVCRun(port=PORT)
+    app = MVCactusRun(port=PORT)
     app.run(MyApp)
 ```
 
@@ -46,10 +46,10 @@ if __name__ == '__main__':
 * More robust error-handling mechanism.
 
 ### Contributing
-I welcome contributions from the community! If you have ideas for new features or improvements to MiniMVC, please open an issue or submit a pull request on GitHub.
+I welcome contributions from the community! If you have ideas for new features or improvements to MVCactus, please open an issue or submit a pull request on GitHub.
 
 ### Website
-https://pypi.org/project/MiniMVC/
+https://pypi.org/project/MVCactus/
 
 ### License
-MiniMVC is licensed under the MIT License. See the LICENSE file for details.
+MVCactus is licensed under the MIT License. See the LICENSE file for details.
