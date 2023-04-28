@@ -5,13 +5,12 @@ import os
 import re
 import socketserver
 import urllib
-
 import jinja2
 
 
 class MVCactus(http.server.BaseHTTPRequestHandler):
     """
-    MVCactus is a simple web framework that allows users to quickly develop and deploy web
+    MVCactus is a simple web micro-framework that allows users to quickly develop and deploy web
     applications. It uses the Jinja2 templating engine for rendering templates and provides a set of convenient
     methods for handling HTTP requests and responses.
 
@@ -28,12 +27,16 @@ class MVCactus(http.server.BaseHTTPRequestHandler):
     routes = []
 
     @classmethod
+    @classmethod
     def route(cls, pattern):
         '''
         A decorator for registering a URL pattern and callback function to handle requests for that pattern.
         '''
+
         def wrapper(callback):
-            cls.routes.append((pattern, callback))
+            # Add the '^' at the beginning and '$' at the end of the pattern to ensure a full match.
+            regex_pattern = f'^{pattern}$'
+            cls.routes.append((regex_pattern, callback))
             return callback
 
         return wrapper
@@ -69,6 +72,34 @@ class MVCactus(http.server.BaseHTTPRequestHandler):
         context['status'] = status
         context['message'] = message
         self.render_template(template_name, context)
+
+    def send_response_headers(self, content_type, content_length=None):
+        """
+        Sends the response headers.
+
+        Args:
+            content_type (str): The content type of the response.
+            content_length (int, optional): The content length of the response. Defaults to None.
+
+        Features:
+            - Access-Control-Allow-Origin: Sends the CORS header allowing any origin to access the resource.
+            - X-Content-Type-Options: Prevents browsers from interpreting files as a different MIME type.
+            - X-Frame-Options: Prevents the content from being embedded within an iframe, avoiding clickjacking attacks.
+            - X-XSS-Protection: Enables the Cross-site scripting (XSS) filter in the browser.
+            - Referrer-Policy: Controls the information sent in the Referer header, avoiding information leaks.
+            - Feature-Policy: Restricts the use of browser features such as geolocation, microphone, and camera.
+        """
+        self.send_response(200)
+        self.send_header('Content-Type', content_type)
+        if content_length is not None:
+            self.send_header('Content-Length', str(content_length))
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('X-Content-Type-Options', 'nosniff')
+        self.send_header('X-Frame-Options', 'SAMEORIGIN')
+        self.send_header('X-XSS-Protection', '1; mode=block')
+        self.send_header('Referrer-Policy', 'no-referrer')
+        self.send_header('Feature-Policy', "geolocation 'none'; microphone 'none'; camera 'none'")
+        self.end_headers()
 
     def do_GET(self):
         '''
@@ -190,13 +221,10 @@ class MVCactus(http.server.BaseHTTPRequestHandler):
             if not os.path.isfile(file_path):
                 raise IOError
 
-            self.send_response(200)
             mime_type, _ = mimetypes.guess_type(path)
-            if mime_type == 'text/css':
-                self.send_header('Cache-Control', 'max-age=86400')
-            self.send_header('Content-Type', mime_type)
-            self.send_header('Content-Length', str(os.path.getsize(file_path)))
-            self.end_headers()
+            content_length = os.path.getsize(file_path)
+
+            self.send_response_headers(mime_type, content_length)
 
             with open(file_path, 'rb') as f:
                 chunk_size = 8192
@@ -245,19 +273,19 @@ class MVCactus(http.server.BaseHTTPRequestHandler):
             context = {}
         context['css_url'] = css_url
         html = template.render(context)
-        self.send_response(200)
-        self.send_header('Content-type', 'text/html')
-        self.end_headers()
+        self.send_response_headers('text/html', len(html.encode('utf-8')))
         self.wfile.write(html.encode('utf-8'))
 
 
 class MVCactusRun:
 
-    def __init__(self, port=8080):
+    def __init__(self, address='localhost', port=8080):
+        self.ADDRESS = address
         self.PORT = port
 
     def run(self, app_class):
-        with socketserver.TCPServer(("", self.PORT), app_class) as httpd:
-            print(f"Running on port {self.PORT}\nEnter here: http://localhost:{self.PORT}/")
+        with socketserver.TCPServer((self.ADDRESS, self.PORT), app_class) as httpd:
+            print(f"Running on {self.ADDRESS}:{self.PORT}\nEnter here: http://{self.ADDRESS}:{self.PORT}/")
 
             httpd.serve_forever()
+
