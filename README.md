@@ -1,9 +1,9 @@
 # MVCactus
-MVCactus is a lightweight, open-source web framework for building small web applications in Python. It provides a simple and intuitive interface for handling HTTP requests and generating dynamic HTML content.
+MVCactus is a lightweight, robust, open-source web micro-framework tailored for developing compact web applications in Python. By providing an efficient and user-friendly interface, it streamlines the process of handling HTTP requests and generating dynamic HTML content.
 
-With MVCactus, you can define routes for handling different URLs, process GET and POST requests, and serve static files such as images, CSS files, and JavaScript files. MVCactus also includes a simple file uploader and validator for processing file uploads from HTML forms.
+The MVCactus micro-framework empowers developers to effortlessly define routes for managing distinct URLs, process GET and POST requests, and serve static files, including images, CSS files, and JavaScript files. Additionally, MVCactus incorporates a streamlined file uploader and validator, simplifying the handling of file uploads from HTML forms.
 
-MVCactus is designed to be easy to use and easy to extend. It is suitable for building small web applications and prototypes, as well as for learning the basics of web development in Python.
+Engineered for adaptability and ease of use, MVCactus serves as an optimal choice for constructing small-scale web applications and prototypes, as well as for mastering the essentials of web development in Python. With an emphasis on security, MVCactus incorporates built-in security headers and CORS support.
 
 ### Getting started
 To get started with MVCactus, follow these steps:
@@ -20,7 +20,7 @@ Inherit from ```MVCactus``` class, and define routes:
 
 ``` python
 class MyApp(MVCactus):
-    @MVCactus.route('/') # Main page.
+    @MVCactus.route('/')
     def home(self, match):
         context = {'title': 'First thing', 'second': 'Second thing'}
         self.render_template('index.html', context=context)
@@ -40,6 +40,9 @@ if __name__ == '__main__':
 * Lightweight and efficient, making it a great fit for small-scale web development projects.
 * Easy to use and easy to learn, with a simple and intuitive API.
 * Provides built-in support for common web development features such as routing, templates, file upload and request/response handling.
+* CORS support with a wildcard value (*) for Access-Control-Allow-Origin, enabling cross-origin resource sharing for all origins.
+* Enhanced security with several built-in security headers like X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy, and Feature-Policy.
+* Configurable server IP address, allowing developers to specify custom IP addresses other than the default 'localhost'.
 
 ### Working on
 * More robust error-handling mechanism.
