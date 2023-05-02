@@ -45,7 +45,9 @@ if __name__ == '__main__':
 * Configurable server IP address, allowing developers to specify custom IP addresses other than the default 'localhost'.
 
 ### Working on
-* More robust error-handling mechanism.
+- [ ] HIGH: Fixing CSS support bug.
+- [x] Add configurable IP address.
+- [x] Add support for CORS and additional security headers.
 
 ## Changelog - 2023-04-28
 
