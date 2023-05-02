@@ -1,6 +1,6 @@
 # Change log
 
-## [Unreleased - 0.0.3] (02.05.2023)
+## [Unreleased - 0.0.3-4] (02.05.2023)
 
 ### Fixed
 * Resolved a bug related to the linking of CSS files.
