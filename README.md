@@ -27,7 +27,7 @@ class MyApp(MVCactus):
         self.render_template('index.html', context=context)
 ```
 
-Place your HTML files in a folder named ```/templates```.
+Place your HTML files in a folder named `/templates`, CSS & JS files in `/static`.
 
 Run your application:
 ``` python
@@ -50,7 +50,10 @@ if __name__ == '__main__':
 - [x] Add configurable IP address.
 - [x] Add support for CORS and additional security headers.
 
-## Changelog - 2023-04-28
+## Changelog - 02-05-2023
+
+### Fixed
+* Resoloved CSS-link bug.
 
 ### Added
 * **Support for CORS header:** The `send_response_headers` method now includes the `Access-Control-Allow-Origin` header with a wildcard value `(*)`, allowing any origin to access the resource.
