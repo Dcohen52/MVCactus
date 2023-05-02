@@ -1,0 +1,3 @@
+root -> ("Run" folder -> "run.py", "added.txt")
+root -> ("Run" folder -> "templates" folder -> "index.html")
+root -> MVCactus folder-> ("static" folder -> "css" folder -> "style.css")

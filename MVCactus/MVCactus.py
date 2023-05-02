@@ -4,7 +4,6 @@ import mimetypes
 import os
 import re
 import socketserver
-import urllib
 import jinja2
 
 
@@ -41,16 +40,12 @@ class MVCactus(http.server.BaseHTTPRequestHandler):
 
         return wrapper
 
-    def url_for_static(self, filename, port=None):
+    def url_for_static(self, filename):
         '''
-        Generates a URL for serving a static file from the 'static' directory, given the filename and optional port number.
-        :param filename: the name of the file to generate the URL for.
-        :param port: an optional port number to include in the URL. Default is None.
-        :return: a URL string.
+        Returns the URL for a static file.
         '''
-        current_dir = os.getcwd()
-        path = os.path.join(current_dir, 'static', filename)
-        return f'http://localhost:{port}/static/{path}'
+        print(f'/static/{filename}')
+        return f'/static/{filename}'
 
     def handle_error(self, status, message, template_name='upload.html', context=None):
         """
@@ -102,13 +97,8 @@ class MVCactus(http.server.BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        '''
-        This method handles GET requests sent to the server. If the path starts with '/static/', it serves a static
-        file using the serve_static_file() method. If the path matches a pattern in self.routes, it calls the
-        corresponding callback function. If none of the patterns match, it sends a 404 error response.
-        '''
         if self.path.startswith('/static/'):
-            path = self.path[1:]
+            path = self.path[7:]
             self.serve_static_file(path)
             return
 
@@ -125,7 +115,7 @@ class MVCactus(http.server.BaseHTTPRequestHandler):
         '''
         This method handles POST requests sent to the server. It first checks if the request contains multipart form
         data. If it does, it saves the uploaded file and sends a success response. If it doesn't, it reads the
-        request body and searches for a callback function in self.routes with the matching path and function name. If
+        request body and searches for a callback function in self. routes with the matching path and function name. If
         it finds a match, it calls the function with the request body as a parameter. If no match is found,
         it sends a 404 error response.
         '''
@@ -171,6 +161,7 @@ class MVCactus(http.server.BaseHTTPRequestHandler):
         Returns: function: The decorator function that registers the given callback function as a POST request
         handler for the given path.
         """
+
         def wrapper(callback):
             """
             Wrapper function that registers the given callback function as a POST request handler for the path given
@@ -205,18 +196,10 @@ class MVCactus(http.server.BaseHTTPRequestHandler):
         handler.wfile.write(body.encode('utf-8'))
 
     def serve_static_file(self, path):
-        """
-        Serves a static file to the client with the given path.
-
-        Args:
-            path (str): The path of the file to serve.
-
-        Returns:
-            None
-        """
         try:
-            current_dir = os.getcwd()
-            file_path = os.path.join(current_dir, 'static', path)
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            file_path = f"{current_dir}/static{path}"
+            print(f'Serving static file: {file_path}')
 
             if not os.path.isfile(file_path):
                 raise IOError
@@ -256,14 +239,13 @@ class MVCactus(http.server.BaseHTTPRequestHandler):
             return False
         return True
 
-    def render_template(self, template_name, context=None, css_url=None):
+    def render_template(self, template_name, context=None):
         """
         Renders a Jinja2 template with the given context and sends the resulting HTML to the client.
 
         Args:
             template_name (str): The name of the template file.
             context (dict, optional): The context to render the template with. Defaults to None.
-            css_url (str, optional): The URL of a CSS stylesheet to include in the template. Defaults to None.
 
         Returns:
             None
@@ -271,7 +253,7 @@ class MVCactus(http.server.BaseHTTPRequestHandler):
         template = self.env.get_template(template_name)
         if context is None:
             context = {}
-        context['css_url'] = css_url
+        context['url_for_static'] = self.url_for_static
         html = template.render(context)
         self.send_response_headers('text/html', len(html.encode('utf-8')))
         self.wfile.write(html.encode('utf-8'))
@@ -288,4 +270,3 @@ class MVCactusRun:
             print(f"Running on {self.ADDRESS}:{self.PORT}\nEnter here: http://{self.ADDRESS}:{self.PORT}/")
 
             httpd.serve_forever()
-
