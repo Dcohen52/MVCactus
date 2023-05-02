@@ -1,4 +1,5 @@
 # MVCactus
+### Current Version: 0.0.4
 MVCactus is a lightweight, robust, open-source web micro-framework tailored for developing compact web applications in Python. By providing an efficient and user-friendly interface, it streamlines the process of handling HTTP requests and generating dynamic HTML content.
 
 The MVCactus micro-framework empowers developers to effortlessly define routes for managing distinct URLs, process GET and POST requests, and serve static files, including images, CSS files, and JavaScript files. Additionally, MVCactus incorporates a streamlined file uploader and validator, simplifying the handling of file uploads from HTML forms.
