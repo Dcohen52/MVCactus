@@ -50,6 +50,30 @@ The main class that you'll use to create your web application. Inherit from this
 * **validate_input(self, data, fields):** Validates the input data for a request, checking that all required fields are present.
 * **render_template(self, template_name, context=None, css_url=None):** Renders a Jinja2 template with the given context and sends the resulting HTML to the client.
 
+## Serving Static Files
+MVCactus provides a convenient method for serving static files in your web applications. Static files include CSS stylesheets, JavaScript files, images, and other assets that are typically not dynamically generated.
+
+To serve static files in MVCactus, you need to place your static files in a directory called "static" in the root of your project. The static directory should be located in the same directory as your MVCactus server file.
+
+For example, if your MVCactus server file is named "app.py", the directory structure should look like this:
+
+```
+<project name>/
+├── app.py
+└── static/
+    ├── css/
+    │   └── styles.css
+    │   js/
+    │   └── script.js
+    └── images/
+        └── logo.png
+```
+
+To serve these static files, you can access them using the "/static/" URL path. For instance, to access the "styles.css" file, you would use the URL "/css/styles.css".
+
+MVCactus automatically handles requests for static files and serves the corresponding file from the "static" directory. It sets the appropriate content type headers based on the file's extension and sends the file's contents in the response.
+
+MVCactus provides automatic handling for the "static" and "templates" folders in your project. If these folders are not found in the root directory of your project - MVCactus will create them for you.
 
 # MVCactusRun Class
 A utility class to run an `MVCactus` application. Initializes the server with the specified port and application class.
