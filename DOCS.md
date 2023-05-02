@@ -15,7 +15,7 @@ pip install MVCactus
 Here is a simple example of how to use MVCactus to create a basic web application:
 
 ``` python
-from mvcactus import MVCactus, MVCactusRun
+from MVCactus.MVCactus import MVCactus, MVCactusRun
 
 class MyApp(MVCactus):
 
@@ -37,10 +37,19 @@ In this example, we define two routes: one for the `home page` and one for the `
 
 ## MVCactus Class
 The main class that you'll use to create your web application. Inherit from this class to define your application's routes and behavior.
+``` python
+class MyApp(MVCactus):
+```
 
 ## Class Methods and Decorators
 * **route(cls, pattern):** A decorator for registering a URL pattern and callback function to handle requests for that pattern.
 * **post(cls, path):** A decorator for registering a POST request handler with a given path.
+
+``` python
+@MVCactus.route('/')
+def home(self, match):
+    self.render_template('index.html')
+```
 
 ## Instance Methods
 * **url_for_static(self, filename, port=None):** Generates a URL for serving a static file from the 'static' directory, given the filename and optional port number.
@@ -76,8 +85,21 @@ MVCactus automatically handles requests for static files and serves the correspo
 
 MVCactus provides automatic handling for the "static" and "templates" folders in your project. If these folders are not found in the root directory of your project - MVCactus will create them for you.
 
+Usage: 
+``` html
+<link rel="stylesheet" href="{{ url_for_static('css/styles.css') }}">
+```
+
 # MVCactusRun Class
 A utility class to run an `MVCactus` application. Initializes the server with the specified port and application class.
+
+Usage:
+``` python
+if __name__ == '__main__':
+    app = MyApp
+    server = MVCactusRun(port=PORT, address=ADDRESS)
+    server.run(app)
+```
 
 ## Instance Methods
 * **run(self, app_class):** Runs the server with the specified application class on the provided port, serving requests indefinitely.
