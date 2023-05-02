@@ -1,4 +1,5 @@
-# MVCactus
+# MVCactus Documentation
+#### Current Version 0.0.4
 MVCactus is a lightweight web micro-framework for quickly developing and deploying web applications in Python. It uses the `Jinja2` templating engine for rendering templates (for now. i'm working on migration of [tempt](https://github.com/Dcohen52/MVCactus) and provides a set of convenient methods for handling HTTP requests and responses. MVCactus includes a routing system that allows users to map URLs to Python functions and supports both `GET` and `POST` requests. It also provides a method for serving static files and includes a basic file upload feature.
 
 ## Getting Started
@@ -32,7 +33,7 @@ app_runner.run(MyApp)
 
 In this example, we define two routes: one for the `home page` and one for the `about page`. When a user visits either of these URLs, the corresponding function will be called, and the appropriate template will be rendered.
 
-# Documentation
+---
 
 ## MVCactus Class
 The main class that you'll use to create your web application. Inherit from this class to define your application's routes and behavior.
