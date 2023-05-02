@@ -44,7 +44,7 @@ class MVCactus(http.server.BaseHTTPRequestHandler):
         '''
         Returns the URL for a static file.
         '''
-        print(f'/static/{filename}')
+        # print(f'/static/{filename}')
         return f'/static/{filename}'
 
     def handle_error(self, status, message, template_name='upload.html', context=None):
@@ -197,8 +197,8 @@ class MVCactus(http.server.BaseHTTPRequestHandler):
 
     def serve_static_file(self, path):
         try:
-            current_dir = os.path.dirname(os.path.abspath(__file__))
-            file_path = f"{current_dir}/static{path}"
+            current_dir = os.path.abspath("static")
+            file_path = f"{current_dir}{path}"
             print(f'Serving static file: {file_path}')
 
             if not os.path.isfile(file_path):
@@ -267,6 +267,16 @@ class MVCactusRun:
 
     def run(self, app_class):
         with socketserver.TCPServer((self.ADDRESS, self.PORT), app_class) as httpd:
-            print(f"Running on {self.ADDRESS}:{self.PORT}\nEnter here: http://{self.ADDRESS}:{self.PORT}/")
+            print(f"Running on {self.ADDRESS}:{self.PORT}")
+            print(f"Enter here: http://{self.ADDRESS}:{self.PORT}/")
+            if "static" or "templates" not in os.listdir():
+                if "static" not in os.listdir():
+                    os.mkdir("static")
+                    print("* Static folder created")
+                elif "templates" not in os.listdir():
+                    os.mkdir("templates")
+                    print("* Templates folder created")
+            print("* Press Ctrl+C to stop")
+            print("========================================")
 
             httpd.serve_forever()
