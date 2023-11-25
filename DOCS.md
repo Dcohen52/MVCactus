@@ -1,7 +1,7 @@
 # MVCactus Documentation
-#### Current Version 0.0.4
-MVCactus is a lightweight web micro-framework for quickly developing and deploying web applications in Python. It uses the `Jinja2` templating engine for rendering templates (for now. i'm working on migration of [tempt](https://github.com/Dcohen52/MVCactus) and provides a set of convenient methods for handling HTTP requests and responses. MVCactus includes a routing system that allows users to map URLs to Python functions and supports both `GET` and `POST` requests. It also provides a method for serving static files and includes a basic file upload feature.
+#### Current Version: 0.0.5
 
+MVCactus is a lightweight Python web framework that makes it easy to create web applications using the Model-View-Controller (MVC) design pattern. It is built on top of the standard Python HTTP server and uses the Placeholdr templating engine to render HTML templates.
 ## Getting Started
 To use `MVCactus`, create a new class that inherits from `MVCactus`, define your routes using the `route` decorator, and implement the corresponding Python functions. Then, create an instance of `MVCactusRun` and call its run method, passing in your app class as an argument.
 
@@ -14,25 +14,20 @@ pip install MVCactus
 ## Example Usage
 Here is a simple example of how to use MVCactus to create a basic web application:
 
-``` python
+```python
 from MVCactus.MVCactus import MVCactus, MVCactusRun
 
 class MyApp(MVCactus):
 
     @MVCactus.route('/')
     def home(self, match):
-        self.render_template('index.html')
-
-    @MVCactus.route('/about')
-    def about(self, match):
-        self.render_template('about.html')
+        self.render_template('index.html', 'css/home.css', 'js/home.js')
 
 app_runner = MVCactusRun(port=8080)
 app_runner.run(MyApp)
 ```
 
-In this example, we define two routes: one for the `home page` and one for the `about page`. When a user visits either of these URLs, the corresponding function will be called, and the appropriate template will be rendered.
-
+In this example, we create a new class called `MyApp` that inherits from `MVCactus`. We then define a route for the root URL path `/` and implement the corresponding function `home`. The `home` function renders the `index.html` template and sends it to the client.
 ---
 
 ## MVCactus Class
@@ -51,15 +46,6 @@ def home(self, match):
     self.render_template('index.html')
 ```
 
-## Instance Methods
-* **url_for_static(self, filename, port=None):** Generates a URL for serving a static file from the 'static' directory, given the filename and optional port number.
-* **handle_error(self, status, message, template_name='upload.html', context=None):** Handles errors by sending the specified status and message as a response and rendering the specified template with the given context.
-* **do_GET(self):** Handles GET requests sent to the server, serves static files, calls the corresponding callback function for matching URL patterns, or sends a 404 error response.
-* **do_POST(self):** Handles POST requests sent to the server, saves uploaded files, calls the corresponding callback function for matching URL patterns and function names, or sends a 404 error response.
-* **serve_static_file(self, path):** Serves a static file to the client with the given path.
-* **validate_input(self, data, fields):** Validates the input data for a request, checking that all required fields are present.
-* **render_template(self, template_name, context=None, css_url=None):** Renders a Jinja2 template with the given context and sends the resulting HTML to the client.
-
 ## Serving Static Files
 MVCactus provides a convenient method for serving static files in your web applications. Static files include CSS stylesheets, JavaScript files, images, and other assets that are typically not dynamically generated.
 
@@ -67,16 +53,34 @@ To serve static files in MVCactus, you need to place your static files in a dire
 
 For example, if your MVCactus server file is named "app.py", the directory structure should look like this:
 
-```
-<project name>/
-├── app.py
-└── static/
-    ├── css/
-    │   └── styles.css
-    │   js/
-    │   └── script.js
-    └── images/
-        └── logo.png
+```bash
+    your_project_directory/
+    │
+    ├── MVCactus/             # Directory containing your MVCactus class
+    │   └── ...
+    │
+    ├── templates/            # Directory containing your HTML templates
+    │   ├── home.html
+    │   ├── about.html
+    │   └── ...
+    │
+    ├── static/               # Directory containing all static files like CSS, JS, images
+    │   ├── css/              # Subdirectory for CSS files
+    │   │   ├── home.css
+    │   │   ├── about.css
+    │   │   └── ...
+    │   │
+    │   ├── js/               # Subdirectory for JavaScript files
+    │   │   ├── home.js
+    │   │   ├── about.js
+    │   │   └── ...
+    │   │
+    │   └── img/              # Subdirectory for images
+    │       ├── logo.png
+    │       └── ...
+    │
+    └── main.py               # Main Python file to run your web server
+
 ```
 
 To serve these static files, you can access them using the "/static/" URL path. For instance, to access the "styles.css" file, you would use the URL "/css/styles.css".
@@ -87,7 +91,8 @@ MVCactus provides automatic handling for the "static" and "templates" folders in
 
 Usage: 
 ``` html
-<link rel="stylesheet" href="{{ url_for_static('css/styles.css') }}">
+<link rel="stylesheet" href="{{ styles_css }}">
+<script src="{{ home_js }}"></script>
 ```
 
 # MVCactusRun Class

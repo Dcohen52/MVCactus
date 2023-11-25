@@ -1,5 +1,10 @@
 # Change log
 
+## [Unreleased - 0.0.5] (25.11.2023)
+* Full integration with Placeholdr templating engine.
+* Improvements to the rendering of CSS and JS files inside the `render_template` method - now you can specify the path to the CSS and JS files relative to the `static` directory: `self.render_template('index.html', 'css/styles.css', 'js/script.js', context)`
+* General code improvements and bug fixes.
+
 ## [Unreleased - 0.0.3-4] (02.05.2023)
 
 ### Fixed

@@ -1,1 +1,1 @@
-console.log("it works!")
+console.log('Hello from script.js');
