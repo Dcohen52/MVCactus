@@ -32,25 +32,25 @@ This will install the latest version of MVCactus and its dependencies.
 
 ### Rendering Templates & Serving Static Files
     
-        ```python
-        class MyApp(MVCactus):
-        
-            @MVCactus.route('/')
-            def index(self, match):
-                context = {
-                    'title': 'MVCactus',
-                }
-                self.render_template('templates/index.html', 'css/styles.css', 'js/script.js', context)
-        ```
+```python
+class MyApp(MVCactus):
+
+    @MVCactus.route('/')
+    def index(self, match):
+        context = {
+            'title': 'MVCactus',
+        }
+        self.render_template('templates/index.html', 'css/styles.css', 'js/script.js', context)
+```
 
 ### Running the Server
     
-            ```python
-            if __name__ == '__main__':
-                app = MyApp
-                server = MVCactusRun(port=8080)
-                server.run(app)
-            ```
+```python
+if __name__ == '__main__':
+    app = MyApp
+    server = MVCactusRun(port=8080)
+    server.run(app)
+```
             
 ## File Structure
 ```bash
